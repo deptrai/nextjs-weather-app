@@ -12,7 +12,22 @@ import { cn } from "@/lib/utils"
 import { ClassNameValue } from "tailwind-merge"
 
 interface AirPollutionProps {
-  airQuality: AirQualityData
+  airQuality: {
+    main: {
+      aqi: number // 1-5
+    }
+    components: {
+      co: number
+      no: number
+      no2: number
+      o3: number
+      so2: number
+      pm2_5: number
+      pm10: number
+      nh3: number
+    }
+    dt: number
+  }
   className?: ClassNameValue
 }
 

@@ -55,7 +55,10 @@ export default async function Home() {
       <div className="flex flex-col gap-4 md:flex-row">
         <div className="flex w-full min-w-[18rem] flex-col gap-4 md:w-1/2">
           <CurrentWeather data={hourly_data.list[0]} city={hourly_data.city} />
-          <TenDayForecast data={ten_day_forecast} />
+          <TenDayForecast 
+            data={ten_day_forecast} 
+            timezone={hourly_data.city.timezone} 
+          />
         </div>
         <section className="grid h-full grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4">
           <WeatherWidgets

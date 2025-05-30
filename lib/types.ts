@@ -8,17 +8,7 @@ export type Location = {
 }
 
 export type OpenWeatherData = {
-  coord: {
-    lon: number
-    lat: number
-  }
-  weather: {
-    id: number
-    main: string
-    description: string
-    icon: string
-  }[]
-  base: string
+  dt: number
   main: {
     temp: number
     feels_like: number
@@ -27,26 +17,31 @@ export type OpenWeatherData = {
     pressure: number
     humidity: number
   }
-  visibility: number
+  weather: Array<{
+    id: number
+    main: string
+    description: string
+    icon: string
+  }>
   wind: {
     speed: number
     deg: number
+    gust?: number
   }
-  clouds: {
-    all: number
+  visibility: number
+  pop?: number
+  rain?: {
+    '1h'?: number
+    '3h'?: number
   }
-  dt: number
+  snow?: {
+    '1h'?: number
+    '3h'?: number
+  }
   sys: {
-    type: number
-    id: number
-    country: string
-    sunrise: number
-    sunset: number
+    pod: 'd' | 'n'
   }
-  timezone: number
-  id: number
-  name: string
-  cod: number
+  dt_txt: string
 }
 
 export type HourlyForecastData = {
@@ -95,7 +90,7 @@ export type HourlyForecastResponse = {
 export type AirQualityData = {
   dt: number
   main: {
-    aqi: 1 | 2 | 3 | 4 | 5
+    aqi: number // 1-5
   }
   components: {
     co: number // Concentration of CO (Carbon monoxide), μg/m3
@@ -110,8 +105,22 @@ export type AirQualityData = {
 }
 
 export type AirPollutionResponse = {
-  coord: Coordinates
-  list: AirQualityData[]
+  list: Array<{
+    main: {
+      aqi: number // 1-5
+    }
+    components: {
+      co: number
+      no: number
+      no2: number
+      o3: number
+      so2: number
+      pm2_5: number
+      pm10: number
+      nh3: number
+    }
+    dt: number
+  }>
 }
 
 type DailyUnits = {
@@ -125,15 +134,12 @@ type DailyData = {
 }
 
 export type UVIndexResponse = {
-  latitude: number
-  longitude: number
-  generationtime_ms: number
-  utc_offset_seconds: number
-  timezone: string
-  timezone_abbreviation: string
-  elevation: number
-  daily_units: DailyUnits
-  daily: DailyData
+  current: {
+    uvi: number
+  }
+  daily: {
+    uv_index_max: number[]
+  }
 }
 
 export type City = {
@@ -191,9 +197,22 @@ export type ForecastData = {
 }
 
 export type TenDayForecastData = {
-  city: City
-  cod: string
-  message: number
-  cnt: number
-  list: ForecastData[]
+  list: Array<{
+    dt: number
+    temp: {
+      day: number
+      min: number
+      max: number
+      night: number
+      eve: number
+      morn: number
+    }
+    weather: Array<{
+      id: number
+      main: string
+      description: string
+      icon: string
+    }>
+    pop: number
+  }>
 }
